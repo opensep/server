@@ -1,0 +1,40 @@
+name: actions
+
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'pull repo'
+        uses: actions/checkout@v2
+      - name: 'setup node'
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: yarn install
+      - run: yarn run build
+  test-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'pull repo'
+        uses: actions/checkout@v2
+      - name: 'setup node'
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: yarn install
+      - run: yarn run build
+      - run: yarn run test:e2e
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'pull repo'
+        uses: actions/checkout@v2
+      - name: 'setup node'
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: yarn install
+      - run: yarn run test:cov
+      - run: curl -Os https://uploader.codecov.io/latest/linux/codecov
+      - run: chmod +x codecov && ./codecov

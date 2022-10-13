@@ -1,2 +1,1 @@
-# server
-opensep server
+OpenSEP server
